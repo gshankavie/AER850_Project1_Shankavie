@@ -18,6 +18,8 @@ from sklearn.metrics import classification_report, confusion_matrix, f1_score, C
 from sklearn.model_selection import train_test_split, StratifiedShuffleSplit
 import joblib
 
+plt.rcParams['font.family'] = 'Times New Roman' #font for all plots 
+
 #Step 1: Data Visualization
 #Load CSV file into DataFrame
 df = pd.read_csv('Project 1 data.csv') 
@@ -39,6 +41,7 @@ plt.title('Linegraph of the DataFrames 4 Columns',fontsize=16, fontname='Times N
 plt.xlabel('DataFrame Row Number',fontname='Times New Roman')
 plt.ylabel('Values',fontname='Times New Roman')
 plt.show()
+
 #Create a HISTOGRAM
 df.hist( color=['m'],edgecolor = 'black')
 plt.xlabel('Values',fontname='Times New Roman')
@@ -48,11 +51,13 @@ plt.show()
 
 #Step 3: Correlation Analysis 
 #Goal of analyzing the correlations between the various coloumns
+
 #Plot heatmap to visualize the correlations, use seaborn  
 plt.figure() #new figure for plotting 
 plt.title('Heatmap to Visualize X, Y, Z, and Step Correlations',fontsize=16, fontname='Times New Roman')
 analysis_corr = df.corr() #computes pearson correlation coefficient in DataFrame
 sns.heatmap(np.abs(analysis_corr)) #plotting heatmap, takes absolute values of correlations
+
 #selects the Step column and the X column, finds the pearson correlation coefficient
 #takes the absolute value 
 corr_ana_X = np.abs(df.iloc[:,3].corr(df.iloc[:,0])) 
@@ -78,11 +83,13 @@ my_splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
 for train_index, test_index in my_splitter.split(df, df['Step']):
     Data_strat_train = df.iloc[train_index].reset_index(drop=True)
     Data_strat_test = df.iloc[test_index].reset_index(drop=True)
+
 #Define the X and Y variables 
 Train_Y = Data_strat_train['Step']
 Train_X = Data_strat_train.drop('Step', axis=1)
 Test_Y = Data_strat_test['Step']
 Test_X = Data_strat_test.drop('Step', axis=1)
+
 #For evaluating model performance 
 scoring_met = ['accuracy','precision','f1']
 
@@ -159,3 +166,18 @@ print("Random Forest Classifier Metrics:\n", Report_RF)
 print("Logistic Regression Metrics:\n", Report_LogReg)
 print("Support Vector Machine (GridSearchCV) Metrics:\n", Report_SVM)
 print("Support Vector Machine (RandomizedSearchCV) Metrics:\n", Report_SVM_Rand)
+
+#SVN was chosen as it got all the predictions correct 
+Model_Select = Model_SVM_Rand
+Model_Pred = Pred_SVM_Rand
+print("Support Vector Machine (RandomizedSearchCV) is the selected confusion matrix.")
+
+#Confusion Matrix for SVN Rand Model 
+Select_Conf = confusion_matrix(Test_Y, Model_Pred)
+Label_Disp = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+Disp_Select_Conf = ConfusionMatrixDisplay(confusion_matrix= Select_Conf, display_labels=Label_Disp)
+ax = Disp_Select_Conf.plot(cmap='viridis')
+plt.title("Confusion Matrix - SVM ((RandomizedSearchCV)",fontsize=16, fontname='Times New Roman')
+plt.show()
+
+#Step 6: Stacked Model Performance Analysis 
