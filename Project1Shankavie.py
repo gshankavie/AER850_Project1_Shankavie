@@ -83,4 +83,28 @@ Train_Y = Data_strat_train['Step']
 Train_X = Data_strat_train.drop('Step', axis=1)
 Test_Y = Data_strat_test['Step']
 Test_X = Data_strat_test.drop('Step', axis=1)
+#For evaluating model performance 
+scoring_met = ['accuracy','precision','f1']
+
+#Model 1: Random Forrest Classifier 
+Model_RF = RandomForestClassifier()
+Param_RF = {
+    'n_estimators': [50, 100, 200],
+}
+
+GridSearch_RF = GridSearchCV(estimator=Model_RF, param_grid=Param_RF, scoring=scoring_met, refit='accuracy')
+GridSearch_RF.fit(Train_X, Train_Y)
+print("Optimized Parameters for Random Forest:\n", GridSearch_RF.best_params_)
+
+# Model 2: Logistic regression
+Model_LogReg = LogisticRegression()
+Param_LogReg = {
+    'penalty': ['l2', 'elasticnet'],
+    'C': [0.01, 0.1, 1, 10],
+}
+
+GridSearch_LogReg = GridSearchCV(estimator=Model_LogReg, param_grid=Param_LogReg, scoring=scoring_met,refit='accuracy')
+GridSearch_LogReg.fit(Train_X, Train_Y)
+print("Optimized Parameters for Logistic Regression:\n", GridSearch_LogReg.best_params_)
+
 
