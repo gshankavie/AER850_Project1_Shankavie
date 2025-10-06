@@ -25,13 +25,12 @@ print(df.describe()) #statistics for the columns
 
 #Step 2: Plot and Explain the Data 
 #Create a LINE GRAPH
-#Create a HISTOGRAM
 df.plot(linestyle = '-')
 plt.title('Linegraph of the DataFrames 4 Columns',fontsize=16, fontname='Times New Roman')
 plt.xlabel('DataFrame Row Number',fontname='Times New Roman')
 plt.ylabel('Values',fontname='Times New Roman')
 plt.show()
-
+#Create a HISTOGRAM
 df.hist( color=['m'],edgecolor = 'black')
 plt.xlabel('Values',fontname='Times New Roman')
 plt.ylabel('Number of Occurences',fontname='Times New Roman')
@@ -42,13 +41,16 @@ plt.show()
 #Goal of analyzing the correlations between the various coloumns
 #Plot heatmap to visualize the correlations, use seaborn  
 plt.figure() #new figure for plotting 
-analysis_corr = data.corr() #computes pearson correlation coefficient in DataFrame
+analysis_corr = df.corr() #computes pearson correlation coefficient in DataFrame
 sns.heatmap(np.abs(analysis_corr)) #plotting heatmap, takes absolute values of correlations
 #selects the Step column and the X column, finds the pearson correlation coefficient
 #takes the absolute value 
 corr_ana_X = np.abs(df.iloc[:,3].corr(df.iloc[:,0])) 
-print("")
-
+print("Step vs X Correlation",corr_ana_X)
+#selects the Step column and the Z column, finds the pearson correlation coefficient
+#takes the absolute value
+corr_ana_Z = np.abs(df.iloc[:,3].corr(df.iloc[:,2])) 
+print("Step vs Z Correlation",corr_ana_Z) 
 
 
 #Step 4: Classification Model Development and Engineering 
