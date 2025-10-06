@@ -107,4 +107,55 @@ GridSearch_LogReg = GridSearchCV(estimator=Model_LogReg, param_grid=Param_LogReg
 GridSearch_LogReg.fit(Train_X, Train_Y)
 print("Optimized Parameters for Logistic Regression:\n", GridSearch_LogReg.best_params_)
 
+# Model 3: Support Vector Machine (SVM)
+Model_SVM = svm.SVC()
+Param_SVM = {
+    'C': [0.01, 0.1, 1, 10],
+    'kernel': ['rbf', 'poly', 'sigmoid'],
+    'gamma': ['scale', 'auto']
+}
 
+GridSearch_SVM = GridSearchCV(estimator=Model_SVM,param_grid=Param_SVM,scoring=scoring_met, refit='accuracy')
+GridSearch_SVM.fit(Train_X, Train_Y)
+print("Optimized Parameters for SVM:\n", GridSearch_SVM.best_params_)
+
+#Model 4: SVN - RandomizedSearchCV
+Model_SVM_Rand = svm.SVC()
+Param_SVM_Rand = {
+    'C': np.linspace(0.01, 10, 20),
+    'kernel': ['linear', 'rbf', 'sigmoid'],
+    'gamma': ['scale', 'auto']
+}
+
+RandomSearch_SVM = RandomizedSearchCV(estimator=Model_SVM_Rand, param_distributions=Param_SVM_Rand, scoring=scoring_met, refit='accuracy')
+RandomSearch_SVM.fit(Train_X, Train_Y)
+print("Optimized Parameters for SVM model (RandomizedSearchCV):\n", RandomSearch_SVM.best_params_)
+
+#Step 5: Model Performance Analysis
+Model_RF = RandomForestClassifier(**GridSearch_RF.best_params_)
+Model_LogReg = LogisticRegression(**GridSearch_LogReg.best_params_)
+Model_SVM = svm.SVC(**GridSearch_SVM.best_params_)
+Model_SVM_Rand = svm.SVC(**RandomSearch_SVM.best_params_)
+
+# Models on the training data
+Model_RF.fit(Train_X, Train_Y)
+Model_LogReg.fit(Train_X, Train_Y)
+Model_SVM.fit(Train_X, Train_Y)
+Model_SVM_Rand.fit(Train_X, Train_Y)
+
+# Predict in regards to the test set
+Pred_RF = Model_RF.predict(Test_X)
+Pred_LogReg = Model_LogReg.predict(Test_X)
+Pred_SVM = Model_SVM.predict(Test_X)
+Pred_SVM_Rand = Model_SVM_Rand.predict(Test_X)
+
+# Classification Reports
+Report_RF = classification_report(Test_Y, Pred_RF)
+Report_LogReg = classification_report(Test_Y, Pred_LogReg)
+Report_SVM = classification_report(Test_Y, Pred_SVM)
+Report_SVM_Rand = classification_report(Test_Y, Pred_SVM_Rand)
+
+print("Random Forest Classifier Metrics:\n", Report_RF)
+print("Logistic Regression Metrics:\n", Report_LogReg)
+print("Support Vector Machine (GridSearchCV) Metrics:\n", Report_SVM)
+print("Support Vector Machine (RandomizedSearchCV) Metrics:\n", Report_SVM_Rand)
