@@ -6,9 +6,10 @@
 #Set up the imports 
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np  
+import numpy as np
+import seaborn as sns  
 
-#Step 1
+#Step 1: Data Visualization
 #Load CSV file into DataFrame
 df = pd.read_csv('Project 1 data.csv') 
 
@@ -25,7 +26,7 @@ print(df.describe()) #statistics for the columns
 #Step 2: Plot and Explain the Data 
 #Create a LINE GRAPH
 #Create a HISTOGRAM
-df.plot(linestyle = '--')
+df.plot(linestyle = '-')
 plt.title('Linegraph of the DataFrames 4 Columns',fontsize=16, fontname='Times New Roman')
 plt.xlabel('DataFrame Row Number',fontname='Times New Roman')
 plt.ylabel('Values',fontname='Times New Roman')
@@ -37,11 +38,10 @@ plt.ylabel('Number of Occurences',fontname='Times New Roman')
 plt.suptitle('Histograms of DataFrames 4 Columns',fontsize=16, fontname='Times New Roman')
 plt.show()
 
+#Step 3: Correlation Analysis 
+#Goal of analyzing the correlations between the various coloumns
+#Plot heatmap to visualize the correlations, use seaborn  
 
 
 
-#create 1 histogram per variable X, Y, Z and see how they are distributed for each step 
-# for col in ['X','Y','Z']:
-#     sns.histplot(df, x=col, hue='Step', bins=15,kde=True,element='step')
-#     plt.title('{col} Distribution per Step')
-#     plt.show()
+
