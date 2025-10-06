@@ -22,3 +22,20 @@ print("Statistics for the Columns:\n")
 print(df.describe()) #statistics for the columns
 
 #Plot and Explain the Data 
+#Create a LINE GRAPH
+#Create a HISTOGRAM
+#creates a new blank figure, 10 in wide and 8 in tall  
+plt.figure(figsize=(10,8))
+df.plot()
+df.hist()
+
+
+
+
+
+
+#create 1 histogram per variable X, Y, Z and see how they are distributed for each step 
+# for col in ['X','Y','Z']:
+#     sns.histplot(df, x=col, hue='Step', bins=15,kde=True,element='step')
+#     plt.title('{col} Distribution per Step')
+#     plt.show()
