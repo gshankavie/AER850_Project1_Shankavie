@@ -167,12 +167,12 @@ print("Logistic Regression Metrics:\n", Report_LogReg)
 print("Support Vector Machine (GridSearchCV) Metrics:\n", Report_SVM)
 print("Support Vector Machine (RandomizedSearchCV) Metrics:\n", Report_SVM_Rand)
 
-#SVN was chosen as it got all the predictions correct 
+#SVM was chosen as it got all the predictions correct 
 Model_Select = Model_SVM_Rand
 Model_Pred = Pred_SVM_Rand
 print("Support Vector Machine (RandomizedSearchCV) is the selected confusion matrix.")
 
-#Confusion Matrix for SVN Rand Model 
+#Confusion Matrix for SVM Rand Model 
 Select_Conf = confusion_matrix(Test_Y, Model_Pred)
 Label_Disp = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 Disp_Select_Conf = ConfusionMatrixDisplay(confusion_matrix= Select_Conf, display_labels=Label_Disp)
@@ -180,7 +180,8 @@ ax = Disp_Select_Conf.plot(cmap='viridis')
 plt.title("Confusion Matrix - SVM ((RandomizedSearchCV)",fontsize=16, fontname='Times New Roman')
 plt.show()
 
-#Step 6: Stacked Model Performance Analysis 
+#Step 6: Stacked Model Performance Analysis
+#Logestic Regression and SVM were the chosen models for this  
 Estimators_Stack = [
     ('LogReg_Base', LogisticRegression())
 ]
@@ -204,3 +205,18 @@ plt.yticks(fontname='Times New Roman', fontsize=10)
 plt.show()
 
 #Step 7: Model Evaluation 
+#Model Name 
+Model_Filename = 'SVM_Randomized_Model.joblib'
+#Trained SVM rand gets svaed 
+joblib.dump(Model_SVM_Rand, Model_Filename)
+#Load Model 
+Loaded_Model = joblib.load(Model_Filename)
+#Data Given 
+Given_Data = pd.DataFrame([[9.375,3.0625,1.51], [6.995,5.125,0.3875], [0,3.0625,1.93], [9.4,3,1.8], [9.4,3,1.3]])
+#Predict steps with the loaded model 
+Predicted_Steps = Loaded_Model.predict(Given_Data)
+#Print Predictions 
+print("\nPredictions for the Data Given:")
+print(Given_Data)
+print("\nPredicted Maintenance Step:")
+print(Predicted_Steps)
