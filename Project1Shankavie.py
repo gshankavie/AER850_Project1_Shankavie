@@ -41,17 +41,27 @@ plt.show()
 #Goal of analyzing the correlations between the various coloumns
 #Plot heatmap to visualize the correlations, use seaborn  
 plt.figure() #new figure for plotting 
+plt.title('Heatmap to Visualize X, Y, Z, and Step Correlations',fontsize=16, fontname='Times New Roman')
 analysis_corr = df.corr() #computes pearson correlation coefficient in DataFrame
 sns.heatmap(np.abs(analysis_corr)) #plotting heatmap, takes absolute values of correlations
 #selects the Step column and the X column, finds the pearson correlation coefficient
 #takes the absolute value 
 corr_ana_X = np.abs(df.iloc[:,3].corr(df.iloc[:,0])) 
-print("Step vs X Correlation",corr_ana_X)
+print("Step vs X Correlation:\n",corr_ana_X)
 #selects the Step column and the Z column, finds the pearson correlation coefficient
 #takes the absolute value
 corr_ana_Z = np.abs(df.iloc[:,3].corr(df.iloc[:,2])) 
-print("Step vs Z Correlation",corr_ana_Z) 
+print("Step vs Z Correlation:\n",corr_ana_Z) 
+#selects the Step column and the Y column, finds the pearson correlation coefficient
+#takes the absolute value
+corr_ana_Y = np.abs(df.iloc[:,3].corr(df.iloc[:,1])) 
+print("Step vs Y Correlation:\n",corr_ana_Y) 
 
+#1 represents data that is exactly the same
+#comparing it to the step we do want high correlation, so it is easier to fit a model to it 
+#within X Y Z we need it to be unique  
+#X has the highest correlation to Step vs Z which has the lowest correlation with Step 
+#Model should be trained with X data against Step 
 
 #Step 4: Classification Model Development and Engineering 
 
