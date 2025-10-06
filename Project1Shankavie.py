@@ -41,7 +41,15 @@ plt.show()
 #Step 3: Correlation Analysis 
 #Goal of analyzing the correlations between the various coloumns
 #Plot heatmap to visualize the correlations, use seaborn  
+plt.figure() #new figure for plotting 
+analysis_corr = data.corr() #computes pearson correlation coefficient in DataFrame
+sns.heatmap(np.abs(analysis_corr)) #plotting heatmap, takes absolute values of correlations
+#selects the Step column and the X column, finds the pearson correlation coefficient
+#takes the absolute value 
+corr_ana_X = np.abs(df.iloc[:,3].corr(df.iloc[:,0])) 
+print("")
 
 
 
+#Step 4: Classification Model Development and Engineering 
 
