@@ -8,6 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np  
 
+#Step 1
 #Load CSV file into DataFrame
 df = pd.read_csv('Project 1 data.csv') 
 
@@ -21,15 +22,20 @@ print(df.shape) #number of rows and columns
 print("Statistics for the Columns:\n")
 print(df.describe()) #statistics for the columns
 
-#Plot and Explain the Data 
+#Step 2: Plot and Explain the Data 
 #Create a LINE GRAPH
 #Create a HISTOGRAM
-#creates a new blank figure, 10 in wide and 8 in tall  
-plt.figure(figsize=(10,8))
-df.plot()
-df.hist()
+df.plot(linestyle = '--')
+plt.title('Linegraph of the DataFrames 4 Columns',fontsize=16, fontname='Times New Roman')
+plt.xlabel('DataFrame Row Number',fontname='Times New Roman')
+plt.ylabel('Values',fontname='Times New Roman')
+plt.show()
 
-
+df.hist( color=['m'],edgecolor = 'black')
+plt.xlabel('Values',fontname='Times New Roman')
+plt.ylabel('Number of Occurences',fontname='Times New Roman')
+plt.suptitle('Histograms of DataFrames 4 Columns',fontsize=16, fontname='Times New Roman')
+plt.show()
 
 
 
