@@ -181,3 +181,26 @@ plt.title("Confusion Matrix - SVM ((RandomizedSearchCV)",fontsize=16, fontname='
 plt.show()
 
 #Step 6: Stacked Model Performance Analysis 
+Estimators_Stack = [
+    ('LogReg_Base', LogisticRegression())
+]
+Model_Stack = StackingClassifier(estimators=Estimators_Stack, final_estimator=svm.SVC())
+Model_Stack.fit(Train_X, Train_Y)
+Pred_Stack = Model_Stack.predict(Test_X)
+# Generate and print classification report
+Report_Stack = classification_report(Test_Y, Pred_Stack)
+print("Stacked Model (Logistic Regression + SVM) Performance:\n", Report_Stack)
+# Confusion matrix
+ConfMatrix_Stack = confusion_matrix(Test_Y, Pred_Stack)
+# Plot the confusion matrix
+ConfDisplay_Stack = ConfusionMatrixDisplay(confusion_matrix=ConfMatrix_Stack, display_labels=Label_Disp)
+ax = ConfDisplay_Stack.plot(cmap='Purples')
+# Plot Formatting
+plt.title("Confusion Matrix - Stacked Model (LogReg + SVM)", fontname='Times New Roman', fontsize=16)
+plt.xlabel("Predicted Label", fontname='Times New Roman', fontsize=12)
+plt.ylabel("True Label", fontname='Times New Roman', fontsize=12)
+plt.xticks(fontname='Times New Roman', fontsize=10)
+plt.yticks(fontname='Times New Roman', fontsize=10)
+plt.show()
+
+#Step 7: Model Evaluation 
