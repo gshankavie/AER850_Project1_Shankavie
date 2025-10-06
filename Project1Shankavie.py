@@ -8,6 +8,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns  
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn import svm
+from joblib import dump, load
+from sklearn.model_selection import cross_val_score, GridSearchCV, RandomizedSearchCV
+from sklearn.ensemble import StackingClassifier
+from sklearn.metrics import classification_report, confusion_matrix, f1_score, ConfusionMatrixDisplay
+from sklearn.model_selection import train_test_split, StratifiedShuffleSplit
+import joblib
 
 #Step 1: Data Visualization
 #Load CSV file into DataFrame
@@ -63,5 +72,15 @@ print("Step vs Y Correlation:\n",corr_ana_Y)
 #X has the highest correlation to Step vs Z which has the lowest correlation with Step 
 #Model should be trained with X data against Step 
 
-#Step 4: Classification Model Development and Engineering 
+#Step 4: Classification Model Development and Engineering
+#Dataset is being split into testing and training sets  
+my_splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+for train_index, test_index in my_splitter.split(df, df['Step']):
+    Data_strat_train = df.iloc[train_index].reset_index(drop=True)
+    Data_strat_test = df.iloc[test_index].reset_index(drop=True)
+#Define the X and Y variables 
+Train_Y = Data_strat_train['Step']
+Train_X = Data_strat_train.drop('Step', axis=1)
+Test_Y = Data_strat_test['Step']
+Test_X = Data_strat_test.drop('Step', axis=1)
 
