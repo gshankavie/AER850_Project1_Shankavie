@@ -42,6 +42,20 @@ plt.xlabel('DataFrame Row Number',fontname='Times New Roman')
 plt.ylabel('Values',fontname='Times New Roman')
 plt.show()
 
+#Create a 3D GRAPH
+fig3D = plt.figure(figsize = [11, 14])
+scatter3D = fig3D.add_subplot(111, projection='3d')
+scatter = scatter3D.scatter(df['X'],df['Y'],df['Z'], c=df['Step'],cmap='tab20')
+#axis labels
+scatter3D.set_xlabel('X')
+scatter3D.set_ylabel('Y')
+scatter3D.set_zlabel('Z')
+#title
+scatter3D.set_title('Maintenance steps in 3D')
+#legend
+legend = scatter3D.legend(*scatter.legend_elements(), title="Step")
+scatter3D.add_artist(legend)
+
 #Create a HISTOGRAM
 df.hist( color=['m'],edgecolor = 'black')
 plt.xlabel('Values',fontname='Times New Roman')
@@ -183,9 +197,9 @@ plt.show()
 #Step 6: Stacked Model Performance Analysis
 #Logestic Regression and SVM were the chosen models for this  
 Estimators_Stack = [
-    ('LogReg_Base', LogisticRegression())
+    ('LogReg_Base', LogisticRegression(**GridSearch_LogReg.best_params_))
 ]
-Model_Stack = StackingClassifier(estimators=Estimators_Stack, final_estimator=svm.SVC())
+Model_Stack = StackingClassifier(estimators=Estimators_Stack, final_estimator=svm.SVC(**GridSearch_SVM.best_params_))
 Model_Stack.fit(Train_X, Train_Y)
 Pred_Stack = Model_Stack.predict(Test_X)
 # Generate and print classification report
